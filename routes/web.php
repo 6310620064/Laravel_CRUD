@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Requests\Users\UpdateProfileRequest;
-
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,4 +27,4 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');
 Route::get('users/profile', [UserController::class, 'edit'])->name('users.edit-profile');
 Route::put('users/profile', [UserController::class, 'update'])->name('users.update-profile');
-
+Route::resource('posts', PostController::class);

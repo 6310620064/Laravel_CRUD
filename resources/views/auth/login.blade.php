@@ -12,10 +12,18 @@
                         @csrf
 
                         @if ($message = Session::get('error'))
-                        <div class="alert alert-danger alert-block">
+                        <script>
+                            Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Email-address or Password are Wrong!',
+                            footer: '<a href="">Why do I have this issue?</a>'
+                            })
+                        </script>
+                        <!-- <div class="alert alert-danger alert-block">
                             <button type="button" class="close" data-dismiss="alert">x</button>    
                             <strong>{{ $message }}</strong>
-                        </div>
+                        </div> -->
                         @endif
 
                         <div class="row mb-3">
