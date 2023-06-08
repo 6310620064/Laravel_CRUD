@@ -5,7 +5,6 @@
     <div class="row mt-5">
         <div class="col-md-12">
         <h2>Add new post</h2>
-        <a href="{{ route('posts.index') }}" class ="btn btn-primary my-3"> Back </a>
         </div>   
     </div>
 
@@ -39,6 +38,8 @@
             </div>
             <div class="col-md-12">
                 <button type="submit" class="btn btn-success my-3"> Submit </button>
+                <a href="{{ route('posts.index') }}" class ="btn btn-primary my-3"> Back </a>
+
             </div>
         </div>
     </form>
