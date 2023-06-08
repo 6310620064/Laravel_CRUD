@@ -64,9 +64,13 @@
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
 
-                                    <a class="dropdown-item" href="{{ route('users.edit-profile') }}">
-                                        My Profile
+                                    <a class="dropdown-item" href="{{ route('posts.index') }}">
+                                        My Post
                                     </a>
+                                    <a class="dropdown-item" href="{{ route('users.edit-profile') }}">
+                                        Edit Profile
+                                    </a>
+        
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -84,10 +88,13 @@
                 </div>
             </div>
         </nav>
-
-        <main class="py-4">
+        
+        <div class = "container py-4">
+        @yield('content')
+        </div>
+        <!-- <main class="py-4">
             @yield('content')
-        </main>
+        </main> -->
     </div>
 </body>
 </html>

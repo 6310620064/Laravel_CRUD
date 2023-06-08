@@ -27,8 +27,8 @@
                             <textarea name="about" id="about" cols="5" rows="5" class ="form-control"> {{$user->about}}</textarea>
                         </div>
 
-                        <button type="submit" class="btn btn-success" onclick="showConfirmation()" >Update</button>
-                        <a href="{{ route('home') }}" class="btn btn-danger" role="button">Back</a>
+                        <button type="submit" class="btn btn-success my-3" onclick="showConfirmation()"  >Update</button>
+                        <a href="{{ route('home') }}" class="btn btn-danger my-3" role="button">Back</a>
                     </form>
                 </div>
             </div>
