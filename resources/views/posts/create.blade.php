@@ -20,7 +20,7 @@
         </div>
     @endif
 
-    <form action="{{ route('posts.store') }}" method="post">
+    <form id = "create-post-form"action="{{ route('posts.store') }}" method="post">
         @csrf
 
         <div class="row">
@@ -39,9 +39,27 @@
             <div class="col-md-12">
                 <button type="submit" class="btn btn-success my-3"> Submit </button>
                 <a href="{{ route('posts.index') }}" class ="btn btn-primary my-3"> Back </a>
-
             </div>
         </div>
     </form>
+    <script>
+        document.getElementById('create-post-form').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent the default form submission
+            
+            Swal.fire({
+                icon: 'success',
+                title: 'Post created successfully',
+                showConfirmButton: false,
+                timer: 1500
+            });
+
+            // Submit the form after showing the success message
+            setTimeout(() => {
+                event.target.submit();
+            }, 1500);
+        });
+    </script>
+
+
 
 @endsection

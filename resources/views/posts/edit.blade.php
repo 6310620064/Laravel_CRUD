@@ -21,7 +21,7 @@
         </div>
     @endif
 
-    <form action="{{ route('posts.update', $post->id) }}" method="post">
+    <form id="update-post-form" action="{{ route('posts.update', $post->id) }}" method="post">
         @csrf
         @method('PUT')
 
@@ -39,11 +39,34 @@
                 </div>
             </div>
             <div class="col-md-12">
-                <button type="submit" class="btn btn-success my-3"> Update </button>
+                <button type="submit" class="btn btn-success my-3" onclick="showConfirmation()" > Update </button>
                 <a href="{{ route('posts.index') }}" class="btn btn-primary my-3">Back</a>
             </div>
         </div>
     </form>
-
+    
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('update-post-form').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent the default form submission
+            
+            Swal.fire({
+                title: 'Do you want to save the changes?',
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: 'Save',
+                denyButtonText: `Don't save`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // If the user confirms, submit the form
+                    Swal.fire('Edit Success!', '', 'success')
+                    this.submit();
+                } else if (result.isDenied) {
+                    Swal.fire('Changes are not saved', '', 'info');
+                }
+            });
+        });
+    });
+</script>
 
 @endsection

@@ -36,8 +36,6 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('update-profile-form').addEventListener('submit', function (event) {

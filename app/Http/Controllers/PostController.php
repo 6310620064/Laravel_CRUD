@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Gate;
 
 class PostController extends Controller
 {
@@ -14,8 +15,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        $data = Post::first()->paginate(5);
-        return view('posts.index', compact('data'))
+        $user = auth()->user();
+        $posts = Post::where('user_id', $user->id)->latest()->paginate(5);
+        return view('posts.index', compact('posts'))
                 ->with('i', (request()->input('page', 1) -1) *5);
     }
     /**
@@ -41,11 +43,16 @@ class PostController extends Controller
             'description' => 'required',
         ]);
 
-        Post::create($request->all());
-        
+        $post = new Post();
+        $post->title = $request->title;
+        $post->description = $request->description;
+        $post->user_id = auth()->user()->id;
+        $post->save();
+
         return redirect()->route('posts.index')
-                        ->with('success', 'Post created successfully.');
+            ->with('success', 'Post created successfully.');
     }
+
 
     /**
      * Display the specified resource.
@@ -79,12 +86,20 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        // กรณีให้userอื่นเห็นpostได้ แต่ไม่ให้update
+        // if (Gate::denies('edit-post', $post)) {
+        //     abort(403, 'Unauthorized');
+        // }
+
         $request->validate([
             'title' => 'required',
             'description' => 'required',
         ]);
 
-        $post->update($request->all());
+        $post->update([
+            'title' => $request->title,
+            'description' => $request->description,
+        ]);
         
         return redirect()->route('posts.index')
                         ->with('success','Post updated successfully.');
@@ -99,8 +114,18 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        // กรณีให้userอื่นเห็นpost แต่ไม่ให้ delete
+        // if (Gate::denies('delete-post', $post)) {
+        //     abort(403, 'Unauthorized');
+        // }
+        
         $post->delete();
         return redirect()->route('posts.index')
                         ->with('success','Post deleted successfully');
+    }
+
+    public function __construct()
+    {
+        $this->middleware('auth');
     }
 }
