@@ -4,31 +4,33 @@
 
     <div class ="row mt-5" >
         <div class="col-md12">
-            <h2>My Post </h2>
-            <a href="{{ route('posts.create') }}" class ="btn btn-success my-3 ">Create new post</a> 
+            <h2 class="text-center" >My Post </h2>
+            <a href="{{ route('posts.create') }}" class ="btn btn-success my-3 ml-20px">Create new post</a> 
         </div>
     </div>
-
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
             {{ $message }}
         </div>
     @endif
 
+
     <table class = "table table-bordered">
         <tr>
-            <th>No.</th>
-            <th>Title</th>
-            <th>Description</th>
-            <th width="280px">Action</th>
+            <th class="text-center">No.</th>
+            <th class="text-center">Title</th>
+            <th class="text-center" >Description</th>
+            <th class="text-center" width="280px">Modifiled</th>
+            <th class="text-center" width="280px">Action</th>
         </tr>
 
         @foreach($posts as $key => $post)      
                 <tr>
-                <td>{{ $key + ++$i }}</td>
-                <td>{{ $post->title }}</td>
-                <td>{{ Str::limit($post->description, 100) }}</td>
-                <td>
+                <td class="text-center">{{ ++$i  }}</td>
+                <td class="text-center">{{ $post->title }}</td>
+                <td class="text-center">{{ Str::limit($post->description, 100) }}</td>
+                <td class="text-center">{{ $post->updated_at->diffForHumans()}}</td>
+                <td class="text-center">
                         <form id ="delete-post-form" action="{{route('posts.destroy',$post->id) }}" method="post">
                         <a href ="{{ route('posts.show',$post->id) }}" class="btn btn-info"> Show </a>
                         <a href ="{{ route('posts.edit',$post->id) }}" class="btn btn-warning"> Edit </a>
