@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -66,17 +68,21 @@
                             </div>
                         </div>
 
-                        <div class="row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                        <div class="row mb-10">
+                            <div class="d-grid gap-2 col-md-8 offset-md-2">
+                                <button type="submit" class="btn btn-info"style="margin-bottom: 10px;">
                                     {{ __('Login') }}
                                 </button>
+                                <p style="text-align : center"> OR </p>
+                                <a href="{{route('login.google')}}" class="btn btn-danger btn-block">Login with Google</a>
+                                <a href="{{route('login.github')}}" class="btn btn-dark btn-block">Login with Github</a>
 
                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
+                                <br>
                             </div>
                         </div>
                     </form>

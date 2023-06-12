@@ -5,6 +5,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Requests\Users\UpdateProfileRequest;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\Auth\LoginController;
+use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,3 +30,14 @@ Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home
 Route::get('users/profile', [UserController::class, 'edit'])->name('users.edit-profile');
 Route::put('users/profile', [UserController::class, 'update'])->name('users.update-profile');
 Route::resource('posts', PostController::class);
+
+
+
+// Google Login
+Route::get('auth/google/redirect', [App\Http\Controllers\Auth\LoginController::class, 'redirectToGoogle'])->name('login.google');
+Route::get('auth/google/callback', [App\Http\Controllers\Auth\LoginController::class, 'handleGoogleCallback']);
+
+// Github Login
+Route::get('auth/github/redirect', [App\Http\Controllers\Auth\LoginController::class, 'redirectToGithub'])->name('login.github');
+Route::get('auth/github/callback', [App\Http\Controllers\Auth\LoginController::class, 'handleGithubCallback']);
+

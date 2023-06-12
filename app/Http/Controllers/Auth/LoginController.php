@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
+use App\Models\User;
+
 
 class LoginController extends Controller
 {
@@ -56,5 +60,51 @@ class LoginController extends Controller
         } else {
             return redirect()->route('login')->with('error','Email-address and Password are Wrong.');
         }
+    }
+
+    //Google Login
+    public function redirectToGoogle() 
+    {
+        return Socialite::driver('google')->redirect();
+    }
+    
+    //Google Callback
+    public function handleGoogleCallback()
+    {
+        $user = Socialite::driver('google')->user();
+
+        $this->_registerOrLoginUser($user);
+
+        return redirect('/');
+    }
+
+     //Github Login
+     public function redirectToGithub() 
+     {
+         return Socialite::driver('github')->redirect();
+     }
+     
+     //Github Callback
+     public function handleGithubCallback()
+     {
+         $user = Socialite::driver('github')->user();
+
+         $this->_registerOrLoginUser($user);
+
+        return redirect('/');
+     }
+
+ 
+    protected function _registerOrLoginUser($data)
+    {
+        $user = User::where('email','=',$data->email)->first();
+        if (!$user){
+            $user = new User();
+            $user->name = $data->name ?? $data->nickname; 
+            $user->email = $data->email;
+            $user->provider_id = $data->id;
+            $user->save();
+        }
+        Auth::login($user);
     }
 }
