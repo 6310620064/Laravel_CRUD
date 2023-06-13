@@ -94,6 +94,20 @@ class LoginController extends Controller
         return redirect('/');
      }
 
+     // Line Login
+    public function redirectToLine()
+    {
+        return Socialite::driver('line')->redirect();
+    }
+
+    public function handleLineCallback()
+    {
+        $user = Socialite::driver('line')->user();
+
+        $this->_registerOrLoginUser($user);
+
+        return redirect('/');
+    }
  
     protected function _registerOrLoginUser($data)
     {
@@ -103,6 +117,7 @@ class LoginController extends Controller
             $user->name = $data->name ?? $data->nickname; 
             $user->email = $data->email;
             $user->provider_id = $data->id;
+            $user->provider = $data->provider;
             $user->save();
         }
         Auth::login($user);

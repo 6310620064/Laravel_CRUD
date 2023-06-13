@@ -74,9 +74,9 @@
                                     {{ __('Login') }}
                                 </button>
                                 <p style="text-align : center"> OR </p>
+                                <a href="{{route('login.line')}}" class=" btn btn-success btn-block">Login with Line</a>
                                 <a href="{{route('login.google')}}" class="btn btn-danger btn-block">Login with Google</a>
                                 <a href="{{route('login.github')}}" class="btn btn-dark btn-block">Login with Github</a>
-
                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}

@@ -41,3 +41,8 @@ Route::get('auth/google/callback', [App\Http\Controllers\Auth\LoginController::c
 Route::get('auth/github/redirect', [App\Http\Controllers\Auth\LoginController::class, 'redirectToGithub'])->name('login.github');
 Route::get('auth/github/callback', [App\Http\Controllers\Auth\LoginController::class, 'handleGithubCallback']);
 
+
+// Line Login
+Route::get('auth/line/redirect', [App\Http\Controllers\Auth\LoginController::class, 'redirectToLine'])->name('login.line');
+Route::get('auth/line/callback', [App\Http\Controllers\Auth\LoginController::class, 'handleLineCallback']);
+
