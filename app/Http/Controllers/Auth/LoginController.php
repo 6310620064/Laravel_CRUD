@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
+use App\Models\Social;
 
 
 class LoginController extends Controller
@@ -102,7 +103,7 @@ class LoginController extends Controller
         }
  
         else {
-             return redirect('/');
+            return redirect('/');
         }
      }
 
@@ -132,25 +133,37 @@ class LoginController extends Controller
     {
         $user = User::where('email','=',$data->email)->first();
         $isUser = true;
-
-        if (!$user){
+        
+        if (!$user) {
             $user = new User();
-            $user->name = $data->name ?? $data->nickname; 
+            $user->name = $data->name ?? $data->nickname;
             $user->email = $data->email;
-            $user->provider_id = $data->id;
-            $user->provider = $provider;
             $user->save();
+    
+            $social = new Social();
+            $social->name = $user->name;
+            $social->email= $user->email;
+            $social->provider = $provider;
+            $social->provider_id = $data->id;
+            $social->save();
             Auth::login($user);
             $isUser = false;
-        } else {
+        }
+        else {
+            $social = Social::where('email', $user->email)->where('provider', $provider)->first();
+            if (!$social) {
+                $social = new Social();
+                $social->name = $user->name;
+                $social->email = $user->email;
+                $social->provider = $provider;
+                $social->provider_id = $data->id;
+                $social->save();
+            }
             Auth::login($user);
         }
-
         return (object) [
-            'isUser' => $isUser,
             'email' => $user->email,
+            'isUser' => $isUser,
         ];
-
-
     }
 }
