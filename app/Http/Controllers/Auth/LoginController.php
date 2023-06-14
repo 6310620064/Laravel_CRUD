@@ -73,7 +73,7 @@ class LoginController extends Controller
     {
         $user = Socialite::driver('google')->user();
 
-        $registeredUser = $this->_registerOrLoginUser($user);
+        $registeredUser = $this->_registerOrLoginUser($user,'google');
 
         if (!$registeredUser->isUser) {
             return redirect()->route('newPasswordGet')->with('email', $registeredUser->email);
@@ -95,7 +95,7 @@ class LoginController extends Controller
      {
         $user = Socialite::driver('github')->user();
 
-        $registeredUser = $this->_registerOrLoginUser($user);
+        $registeredUser = $this->_registerOrLoginUser($user,'github');
 
         if (!$registeredUser->isUser) {
              return redirect()->route('newPasswordGet')->with('email', $registeredUser->email);
@@ -116,7 +116,7 @@ class LoginController extends Controller
     {
         $user = Socialite::driver('line')->user();
 
-        $registeredUser = $this->_registerOrLoginUser($user);
+        $registeredUser = $this->_registerOrLoginUser($user,'line');
 
         if (!$registeredUser->isUser) {
             return redirect()->route('newPasswordGet')->with('email', $registeredUser->email);
@@ -128,7 +128,7 @@ class LoginController extends Controller
     }
 
  
-    protected function _registerOrLoginUser($data)
+    protected function _registerOrLoginUser($data,$provider)
     {
         $user = User::where('email','=',$data->email)->first();
         $isUser = true;
@@ -138,6 +138,7 @@ class LoginController extends Controller
             $user->name = $data->name ?? $data->nickname; 
             $user->email = $data->email;
             $user->provider_id = $data->id;
+            $user->provider = $provider;
             $user->save();
             Auth::login($user);
             $isUser = false;
