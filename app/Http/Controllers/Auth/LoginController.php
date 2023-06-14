@@ -73,9 +73,15 @@ class LoginController extends Controller
     {
         $user = Socialite::driver('google')->user();
 
-        $this->_registerOrLoginUser($user);
+        $registeredUser = $this->_registerOrLoginUser($user);
 
-        return redirect('/');
+        if (!$registeredUser->isUser) {
+            return redirect()->route('newPasswordGet')->with('email', $registeredUser->email);
+        }
+
+        else {
+            return redirect('/');
+        }
     }
 
      //Github Login
@@ -87,11 +93,17 @@ class LoginController extends Controller
      //Github Callback
      public function handleGithubCallback()
      {
-         $user = Socialite::driver('github')->user();
+        $user = Socialite::driver('github')->user();
 
-         $this->_registerOrLoginUser($user);
+        $registeredUser = $this->_registerOrLoginUser($user);
 
-        return redirect('/');
+        if (!$registeredUser->isUser) {
+             return redirect()->route('newPasswordGet')->with('email', $registeredUser->email);
+        }
+ 
+        else {
+             return redirect('/');
+        }
      }
 
      // Line Login
@@ -104,22 +116,40 @@ class LoginController extends Controller
     {
         $user = Socialite::driver('line')->user();
 
-        $this->_registerOrLoginUser($user);
+        $registeredUser = $this->_registerOrLoginUser($user);
 
-        return redirect('/');
+        if (!$registeredUser->isUser) {
+            return redirect()->route('newPasswordGet')->with('email', $registeredUser->email);
+        }
+
+        else {
+            return redirect('/');
+        }
     }
+
  
     protected function _registerOrLoginUser($data)
     {
         $user = User::where('email','=',$data->email)->first();
+        $isUser = true;
+
         if (!$user){
             $user = new User();
             $user->name = $data->name ?? $data->nickname; 
             $user->email = $data->email;
             $user->provider_id = $data->id;
-            $user->provider = $data->provider;
             $user->save();
+            Auth::login($user);
+            $isUser = false;
+        } else {
+            Auth::login($user);
         }
-        Auth::login($user);
+
+        return (object) [
+            'isUser' => $isUser,
+            'email' => $user->email,
+        ];
+
+
     }
 }

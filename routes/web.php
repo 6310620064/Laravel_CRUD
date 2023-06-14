@@ -46,3 +46,11 @@ Route::get('auth/github/callback', [App\Http\Controllers\Auth\LoginController::c
 Route::get('auth/line/redirect', [App\Http\Controllers\Auth\LoginController::class, 'redirectToLine'])->name('login.line');
 Route::get('auth/line/callback', [App\Http\Controllers\Auth\LoginController::class, 'handleLineCallback']);
 
+//New Password for New User
+Route::get('/newPassword', [App\Http\Controllers\HomeController::class, 'showNewPasswordGet'])->name('newPasswordGet')->middleware('IsUser');
+Route::post('/newPassword', [App\Http\Controllers\HomeController::class, 'NewPasswordPost'])->name('newPasswordPost')->middleware('IsUser');
+
+// Change Password
+Route::get('/changePassword', [App\Http\Controllers\HomeController::class, 'showchangePasswordGet'])->name('changePasswordGet');
+Route::post('/changePassword', [App\Http\Controllers\HomeController::class, 'changePasswordPost'])->name('changePasswordPost');
+

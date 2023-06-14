@@ -48,4 +48,5 @@ return [
         'redirect' => env('LINE_REDIRECT_URI'),
     ],
 
+
 ];

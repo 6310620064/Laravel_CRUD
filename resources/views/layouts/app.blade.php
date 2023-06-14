@@ -70,8 +70,13 @@
                                     <a class="dropdown-item" href="{{ route('posts.index') }}">
                                         My Post
                                     </a>
+
                                     <a class="dropdown-item" href="{{ route('users.edit-profile') }}">
                                         Edit Profile
+                                    </a>
+
+                                    <a class="dropdown-item" href="{{ route('changePasswordGet') }}">
+                                        Change Password
                                     </a>
         
                                     <a class="dropdown-item" href="{{ route('logout') }}"
