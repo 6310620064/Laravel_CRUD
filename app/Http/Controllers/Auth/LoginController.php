@@ -159,6 +159,11 @@ class LoginController extends Controller
                 $social->provider_id = $data->id;
                 $social->save();
             }
+            else{
+                if ($isUser = false){
+                    return redirect()->route('newPasswordGet')->with('email', $registeredUser->email);
+                }
+            }
             Auth::login($user);
         }
         return (object) [
