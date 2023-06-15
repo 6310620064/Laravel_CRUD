@@ -10,7 +10,7 @@ use SendGrid\Mail\Mail;
 use SendGrid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
-
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 
 class ForgotPasswordController extends Controller

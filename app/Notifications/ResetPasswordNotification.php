@@ -31,8 +31,11 @@ class ResetPasswordNotification extends ResetPassword
      * @param  mixed  $notifiable
      * @return string
      */
-    protected function signedUrl($notifiable)
+    protected function signedUrl($email,$token)
     {
-        return URL::signedRoute('password.reset', ['token' => $this->token]);
+        return URL::signedRoute('password.reset', [
+            'token' => $this->token,
+            'email' => $email
+        ]);
     }
 }
