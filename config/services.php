@@ -48,5 +48,9 @@ return [
         'redirect' => env('LINE_REDIRECT_URI'),
     ],
 
+    'sendgrid' => [
+        'api_key' => env('SENDGRID_API_KEY'),
+    ],
+
 
 ];

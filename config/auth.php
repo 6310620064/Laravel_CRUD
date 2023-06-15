@@ -107,5 +107,5 @@ return [
     */
 
     'password_timeout' => 10800,
-
+    'users' => ['provider' => 'users', 'confirm' => true]
 ];

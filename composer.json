@@ -8,6 +8,7 @@
         "php": "^7.3|^8.0",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "illuminate/auth": "*",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/socialite": "^5.6",
@@ -15,6 +16,7 @@
         "laravel/ui": "^3.4",
         "linecorp/line-bot-sdk": "^8.0",
         "nesbot/carbon": "^2.67",
+        "sendgrid/sendgrid": "^8.0",
         "socialiteproviders/line": "^4.1"
     },
     "require-dev": {
