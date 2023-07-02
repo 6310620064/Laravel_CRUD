@@ -28,7 +28,7 @@
 - About Me
 
 ## DEMO CLIP
-*[Link](https://youtu.be/bVNBK7KYZjM).
+[Link](https://youtu.be/bVNBK7KYZjM).
   
 
 
